@@ -1,22 +1,23 @@
-# 查找 libuv 库
-find_package(libuv REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LIBUV REQUIRED libuv)
 
-include_directories(${PROJECT_SOURCE_DIR})
+include_directories(${LIBUV_INCLUDE_DIRS})
+link_directories(${LIBUV_LIBRARY_DIRS})
 
 add_executable(helloword helloworld/main.c)
-target_link_libraries(helloword PRIVATE libuv::uv)
+target_link_libraries(helloword ${LIBUV_LIBRARIES})
 
 add_executable(default-loop default-loop/main.c)
-target_link_libraries(default-loop PRIVATE libuv::uv)
+target_link_libraries(default-loop ${LIBUV_LIBRARIES})
 
 add_executable(idle-basic idle-basic/main.c)
-target_link_libraries(idle-basic PRIVATE libuv::uv)
+target_link_libraries(idle-basic ${LIBUV_LIBRARIES})
 
 add_executable(uvcat uvcat/main.c)
-target_link_libraries(uvcat PRIVATE libuv::uv)
+target_link_libraries(uvcat ${LIBUV_LIBRARIES})
 
 add_executable(uvtee uvtee/main.c)
-target_link_libraries(uvtee PRIVATE libuv::uv)
+target_link_libraries(uvtee ${LIBUV_LIBRARIES})
 
 add_executable(onchange onchange/main.c)
-target_link_libraries(onchange PRIVATE libuv::uv)
+target_link_libraries(onchange ${LIBUV_LIBRARIES})
