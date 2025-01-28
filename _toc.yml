@@ -8,3 +8,9 @@ parts:
   numbered: false
   chapters:
   - file: 命令行参数解析
+- caption: Libuv入门
+  numbered: false
+  chapters:
+  - file: docs/libuv/简介.md
+  - file: docs/libuv/设计思想.md
+  - file: docs/libuv/文件系统.md

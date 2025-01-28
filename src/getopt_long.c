@@ -12,21 +12,21 @@ int main(int argc, char *argv[]) {
   while ((opt = getopt_long(argc, argv, "ho:v", long_options, &option_index)) !=
          -1) {
     switch (opt) {
-      case 'h':
-        printf("Help message\n");
-        break;
-      case 'o':
-        printf("Output file: %s\n", optarg);
-        break;
-      case 'v':
-        printf("Verbose mode enabled\n");
-        break;
-      case '?':
-        printf("Unknown option\n");
-        break;
-      default:
-        fprintf(stderr, "Usage: %s [-h] [-o file] [--verbose]\n", argv[0]);
-        return 1;
+    case 'h':
+      printf("Help message\n");
+      break;
+    case 'o':
+      printf("Output file: %s\n", optarg);
+      break;
+    case 'v':
+      printf("Verbose mode enabled\n");
+      break;
+    case '?':
+      printf("Unknown option\n");
+      break;
+    default:
+      fprintf(stderr, "Usage: %s [-h] [-o file] [--verbose]\n", argv[0]);
+      return 1;
     }
   }
   return 0;

@@ -37,7 +37,6 @@ void write_data(uv_stream_t *dest, ssize_t size, const uv_buf_t buf,
   memcpy(req->buf.base, buf.base, size);
   uv_write((uv_write_t *)req, (uv_stream_t *)dest, &req->buf, 1, cb);
 }
-
 void read_stdin(uv_stream_t *stream, ssize_t nread, const uv_buf_t *buf) {
   if (nread < 0) {
     if (nread == UV_EOF) {
@@ -50,8 +49,7 @@ void read_stdin(uv_stream_t *stream, ssize_t nread, const uv_buf_t *buf) {
     write_data((uv_stream_t *)&file_pipe, nread, *buf, on_file_write);
   }
 
-  if (buf->base)
-    free(buf->base);
+  if (buf->base) free(buf->base);
 }
 
 int main(int argc, char *argv[]) {
