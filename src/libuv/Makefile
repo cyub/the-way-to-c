@@ -1,4 +1,4 @@
-build: clean-build
+build-all: clean-build
 	cmake -S . -B build
 	cmake --build build
 
