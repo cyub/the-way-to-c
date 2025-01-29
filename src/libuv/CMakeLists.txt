@@ -30,3 +30,15 @@ target_link_libraries(file-request ${LIBUV_LIBRARIES})
 
 add_executable(sync-readwrite sync-readwrite/main.c)
 target_link_libraries(sync-readwrite ${LIBUV_LIBRARIES})
+
+add_executable(tcp-server tcp-server/main.c)
+target_include_directories(tcp-server PRIVATE ${CMAKE_BINARY_DIR}/include) # 将生成的 config.h 文件添加到编译中
+
+add_executable(tcp-client tcp-client/main.c)
+target_include_directories(tcp-client PRIVATE ${CMAKE_BINARY_DIR}/include)
+
+add_executable(udp-server udp-server/main.c)
+target_include_directories(udp-server PRIVATE ${CMAKE_BINARY_DIR}/include)
+
+add_executable(udp-client udp-client/main.c)
+target_include_directories(udp-client PRIVATE ${CMAKE_BINARY_DIR}/include)

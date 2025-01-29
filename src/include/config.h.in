@@ -1,0 +1,3 @@
+#define TCP_PORT @TCP_PORT@
+#define UDP_PORT @UDP_PORT@
+#define BUFFER_SIZE @BUFFER_SIZE@

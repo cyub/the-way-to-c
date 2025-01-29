@@ -3,6 +3,15 @@ project(code-examples VERSION 0.1.0 LANGUAGES C)
 
 set(CMAKE_C_STANDARD 99)
 
+include_directories(include)
+
+set(TCP_PORT 7000) # 配置头文件config.h.in中的宏
+set(UDP_PORT 7001)
+set(BUFFER_SIZE 1024)
+
+# 配置头文件
+configure_file(include/config.h.in include/config.h)
+
 add_subdirectory(libuv)
 
 # 定义源文件列表
