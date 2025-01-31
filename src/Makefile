@@ -1,5 +1,5 @@
 build: clean-build
-	cmake -S . -B build
+	cmake -DDEFAULT_PORT=8099 -S . -B build
 	cmake --build build
 
 clean-build:
