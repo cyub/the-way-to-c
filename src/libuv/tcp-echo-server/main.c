@@ -23,6 +23,7 @@ void on_close(uv_handle_t *handle) { free(handle); }
 void echo_read(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf) {
   if (nread > 0) {
     write_req_t *req = (write_req_t *)malloc(sizeof(write_req_t));
+    printf("Received: %.*s\n", (int)nread, buf->base);
     req->buf = uv_buf_init(buf->base, nread);
     uv_write((uv_write_t *)req, client, &req->buf, 1, NULL);
     return;
@@ -32,7 +33,7 @@ void echo_read(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf) {
     uv_close((uv_handle_t *)client, NULL);
   }
 
-  free(buf->base);
+  if (buf->base) free(buf->base);
 }
 
 void on_new_connection(uv_stream_t *server, int status) {
