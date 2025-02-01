@@ -48,3 +48,6 @@ target_link_libraries(tcp-echo-server ${LIBUV_LIBRARIES})
 
 add_executable(tcp-echo-client tcp-echo-client/main.c)
 target_link_libraries(tcp-echo-client ${LIBUV_LIBRARIES})
+
+add_executable(udp-dhcp udp-dhcp/main.c)
+target_link_libraries(udp-dhcp ${LIBUV_LIBRARIES})
