@@ -45,3 +45,6 @@ target_include_directories(udp-client PRIVATE ${CMAKE_BINARY_DIR}/include)
 
 add_executable(tcp-echo-server tcp-echo-server/main.c)
 target_link_libraries(tcp-echo-server ${LIBUV_LIBRARIES})
+
+add_executable(tcp-echo-client tcp-echo-client/main.c)
+target_link_libraries(tcp-echo-client ${LIBUV_LIBRARIES})
