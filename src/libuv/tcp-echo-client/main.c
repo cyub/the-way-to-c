@@ -39,6 +39,5 @@ int main() {
   uv_tcp_connect(&connect_req, &client, (const struct sockaddr *)&server_addr,
                  on_connect);
 
-  uv_run(loop, UV_RUN_DEFAULT);
-  return 0;
+  return uv_run(loop, UV_RUN_DEFAULT);
 }
