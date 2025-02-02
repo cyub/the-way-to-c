@@ -20,6 +20,7 @@ void alloc_buffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf) {
 }
 
 void on_close(uv_handle_t *handle) { free(handle); }
+
 void echo_read(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf) {
   if (nread > 0) {
     write_req_t *req = (write_req_t *)malloc(sizeof(write_req_t));
