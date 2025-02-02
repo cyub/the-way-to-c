@@ -18,8 +18,7 @@ void on_read(uv_udp_t *req, ssize_t nread, const uv_buf_t *buf,
   if (nread < 0) {
     fprintf(stderr, "Read error %s\n", uv_err_name(nread));
     uv_close((uv_handle_t *)&req, NULL);
-    // if (buf->base) free(buf->base);
-    free(buf->base);
+    if (buf->base) free(buf->base);
     return;
   }
 
@@ -123,4 +122,6 @@ int main() {
   uv_ip4_addr("255.255.255.255", 67, &send_addr);
   uv_udp_send(&send_req, &send_socket, &discover_msg, 1,
               (const struct sockaddr *)&send_addr, on_send);
+
+  return uv_run(loop, UV_RUN_DEFAULT);
 }
