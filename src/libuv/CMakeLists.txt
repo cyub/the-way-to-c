@@ -54,3 +54,8 @@ target_link_libraries(udp-dhcp ${LIBUV_LIBRARIES})
 
 add_executable(dns dns/main.c)
 target_link_libraries(dns ${LIBUV_LIBRARIES})
+
+add_executable(interfaces interfaces/main.c)
+target_link_libraries(interfaces ${LIBUV_LIBRARIES})
+
+add_executable(if interfaces/if.c)
