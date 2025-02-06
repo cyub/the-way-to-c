@@ -59,3 +59,6 @@ add_executable(interfaces interfaces/main.c)
 target_link_libraries(interfaces ${LIBUV_LIBRARIES})
 
 add_executable(if interfaces/if.c)
+
+add_executable(queue-work queue-work/main.c)
+target_link_libraries(queue-work ${LIBUV_LIBRARIES})
