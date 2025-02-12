@@ -26,6 +26,7 @@ void fib(uv_work_t *req) {
 
 void fib_done(uv_work_t *req, int status) {
   fprintf(stderr, "Done calculating %dth fibonacci\n", *(int *)req->data);
+  // free(req); // 非法操作，因为req是main函数的栈上分配的
 }
 
 int main() {
