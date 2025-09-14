@@ -169,6 +169,7 @@ nav:
     - 数据类型与变量: basic/clang_var.md
   - 高级特性:
     - 命令行参数解析: feature/cmdline_option.md
+    - GCC完全指南: feature/gcc.md
   - Libuv入门:
     - 简介: libuv/简介.md
     - 设计思想: libuv/设计思想.md
