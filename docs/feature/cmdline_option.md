@@ -21,8 +21,8 @@ int main(int argc, char *argv[]);
 
 **代码示例：简单的命令行参数读取**
 
-```{literalinclude} ./src/read_allopt.c
-:language: c
+```cpp
+--8<-- "src/read_allopt.c"
 ```
 
 运行程序时，可以通过命令行传递参数，例如：
@@ -47,8 +47,8 @@ make read_allopt
 
 **代码示例：解析选项和参数**
 
-```{literalinclude} ./src/read_opt.c
-:language: c
+```cpp
+--8<-- "src/read_opt.c"
 ```
 
 运行示例：
@@ -213,8 +213,8 @@ int getopt(int argc, char *const argv[], const char *optstring);
 
 #### 示例
 
-```{literalinclude} ./src/getopt.c
-:language: c
+```cpp
+--8<-- "src/getopt.c"
 ```
 
 运行示例:
@@ -284,8 +284,8 @@ struct option {
 
 #### 示例
 
-```{literalinclude} ./src/getopt_long.c
-:language: c
+```cpp
+--8<-- "src/getopt_long.c"
 ```
 
 运行示例：
@@ -322,10 +322,11 @@ Verbose mode enabled
 :::{note}
 只有 `getopt_long` 支持解析行为控制，`getopt` 不支持。
 :::
+
 ##### 示例
 
-```{literalinclude} ./src/getopt_long_mode.c
-:language: c
+```cpp
+--8<-- "src/getopt_long_mode.c"
 ```
 
 运行示例：
@@ -344,8 +345,8 @@ Non-option argument: bar
 
 通过将长选项结构 `option` 中 `val` 字段标识为特定选项值，来避免与形如 `-a`、`-b` 等ASCII字符串构成的短选项字符冲突。常见解决办法是将 `val` 字段设置成 `CHAR_MAX + 1` 等值，这样不会与短选项字符冲突。`CHAR_MAX` 是 C 标准库中定义的一个宏，表示 char 类型的最大值（通常是 127 或 255，取决于平台）。
 
-```{literalinclude} ./src/getopt_long_customopt.c
-:language: c
+```cpp
+--8<-- "src/getopt_long_customopt.c"
 ```
 
 运行示例：
@@ -365,11 +366,13 @@ User Parent: 0
 在使用 `getopt` 或 `getopt_long` 解析命令行参数后，剩余的参数（即非选项参数）可以通过 `optind` 变量获取。`optind` 是 `getopt` 和 `getopt_long` 提供的一个全局变量，表示下一个待处理的参数在 `argv` 中的索引。
 
 **`optind` 的作用：**
+
 - `optind` 初始值为 `1`（因为 `argv[0]` 是程序名称）。
 - 每次调用 `getopt` 或 `getopt_long` 时，`optind` 会更新为下一个待处理的参数索引。
 - 解析完成后，`optind` 指向第一个非选项参数的位置。
 
 **获取非选项参数的步骤：**
+
 1. 使用 `getopt` 或 `getopt_long` 解析选项。
 2. 解析完成后，`optind` 指向第一个非选项参数。
 3. 遍历 `argv` 从 `optind` 到 `argc`，即可获取所有剩余参数。
@@ -377,10 +380,9 @@ User Parent: 0
 #### 示例
 以下是一个完整的示例，展示如何获取剩余参数：
 
-```{literalinclude} ./src/getopt_remain.c
-:language: c
+```cpp
+--8<-- "src/getopt_remain.c"
 ```
-
 
 运行示例：
 
