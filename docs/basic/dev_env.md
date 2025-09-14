@@ -65,6 +65,7 @@ C语言需要编译器将源代码转换为可执行文件。常见的编译器�
 **深度配置**：集成IntelliSense（代码补全）：在`c_cpp_properties.json`中指定include路径，如`"includePath": ["${workspaceFolder}/**"]`。对于大型项目，添加调试配置`launch.json`以支持断点调试。
 
 ### 其他IDE选项
+
 - **CLion**：下载[JetBrains官网](https://www.jetbrains.com/clion/)。内置CMake支持，适合多文件项目。配置：新建项目，选择C语言，自动检测编译器。
 - **Code::Blocks**：免费开源IDE，内置MinGW。适合Windows初学者。
 
@@ -76,6 +77,7 @@ C语言需要编译器将源代码转换为可执行文件。常见的编译器�
 - **CMake**：高级工具，生成平台无关的构建文件（如Makefile或VS项目）。
 
 ### 安装和使用Make
+
 - Windows：随MinGW安装。
 - macOS/Linux：通常预装，或`sudo apt install make`。
 
@@ -93,11 +95,13 @@ hello: hello.c
 1. 下载安装：访问[CMake官网](https://cmake.org/)。
 2. 示例项目结构：
    - `CMakeLists.txt`：
+
      ```
      cmake_minimum_required(VERSION 3.10)
      project(HelloWorld)
      add_executable(hello hello.c)
      ```
+
 3. 构建：`mkdir build && cd build && cmake .. && make`。
 4. 运行：`./hello`。
 
@@ -108,11 +112,13 @@ CMake支持模块化工程，如`find_package`集成第三方库（e.g., OpenSSL
 调试是工程实践的核心。推荐GDB（GNU Debugger）。
 
 ### 安装GDB
+
 - Windows：随MinGW安装。
 - macOS：随Xcode安装，或Homebrew：`brew install gdb`。
 - Linux：`sudo apt install gdb`。
 
 使用：
+
 1. 编译带调试信息：`gcc -g hello.c -o hello`。
 2. 运行GDB：`gdb ./hello`。
 3. 命令：`break main` 设置断点，`run` 运行，`next` 单步，`print var` 查看变量。
@@ -156,6 +162,7 @@ int main() {
 ```bash
 gcc hello.c -o hello
 ```
+
 （Windows用户可使用`gcc hello.c -o hello.exe`）
 
 3. 运行程序：
@@ -163,4 +170,5 @@ gcc hello.c -o hello
 ```bash
 ./hello
 ```
+
 （Windows用户可使用`hello.exe`）

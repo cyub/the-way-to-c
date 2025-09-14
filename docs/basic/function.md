@@ -5,21 +5,22 @@ C 语言程序是由一个或多个函数构成的, 且必须有一个 **main** 
 ## 函数定义
 
 函数由两部分组成, 分别是函数头和函数体。
+
 ```c
 类型标识符 函数名(形式参数列表) // 函数头
 {
-	// 函数体
+ // 函数体
 }
 ```
 
 1. **类型标识符**指明了函数的类型, 即函数返回值的类型, 若没有返回值, 则使用 `void`
 2. **形式参数列表**: 可以有多个形式参数, 也可以没有, 格式如下:
-	1. **类型标识符 变量1, 类型标识符 变量2, ... ...**
-	2. 形式参数 (通常简称形参) 需要指定数据类型
-	(形参在函数定义时不会分配任何存储空间, 也没有具体的值, 因此称为形式参数)
-	3. 有多个形参时, 用逗号隔开, 每个形参需单独指定数据类型。
-	4. 如果函数不带参数, 则形参可以省略, 但括号不能省。
-	5. 形参只在函数内部有效/可见。
+1. **类型标识符 变量1, 类型标识符 变量2, ... ...**
+2. 形式参数 (通常简称形参) 需要指定数据类型
+ (形参在函数定义时不会分配任何存储空间, 也没有具体的值, 因此称为形式参数)
+3. 有多个形参时, 用逗号隔开, 每个形参需单独指定数据类型。
+4. 如果函数不带参数, 则形参可以省略, 但括号不能省。
+5. 形参只在函数内部有效/可见。
 
 ```c
 int my_max(int x, int y) // OK
@@ -33,8 +34,8 @@ int my_max(int x, y) // ERROR
 ```c
 int my_max(int x, int y)
 {
-	if (x > y) return x;
-	else return y;
+ if (x > y) return x;
+ else return y;
 }
 ```
 
@@ -67,6 +68,7 @@ C语言函数的调用约定（或更广义的 C 调用约定）定义了在 C �
 
 > [!note] 笔记
 > **ABI（Application Binary Interface）**是硬件平台和操作系统上的一种标准，它定义了以下内容：
+>
 > - 函数调用约定：参数如何传递、返回值如何传递、寄存器如何使用等。
 > - 二进制格式：比如可执行文件的格式（ELF 在 Linux 上常见）。
 > - 栈布局：如何管理函数调用栈。
@@ -77,7 +79,7 @@ C语言函数的调用约定（或更广义的 C 调用约定）定义了在 C �
 - 传递参数时，按照从左到右的顺序，将尽可能多的参数依次保存在寄存器中
   - 整数或指针类型参数通过寄存器 `rdi`, `rsi`, `rdx`, `rcx`, `r8`, `r9` 传递
   - 浮点类型参数通过寄存器 `xmm0`，`xmm1`，`xmm2`，`xmm3`，`xmm4`，`xmm5`，`xmm6`，`xmm7`
-- 超出寄存器数量的参数通过栈传递，按照从右到左的顺序压入栈中，并在调用之后 由调用函数推出栈 
+- 超出寄存器数量的参数通过栈传递，按照从右到左的顺序压入栈中，并在调用之后 由调用函数推出栈
   - 栈上的参数以 8 字节对齐
 
 寄存器/栈位置 | 参数
@@ -175,9 +177,9 @@ main:
 
 栈地址偏移 | 内容
 --- | ---
-rsp+16	| 第 9 个参数
-rsp+8	| 第 8 个参数
-rsp	 | 第 7 个参数
+rsp+16 | 第 9 个参数
+rsp+8 | 第 8 个参数
+rsp  | 第 7 个参数
 
 示例：
 
@@ -219,15 +221,16 @@ main:
 #### 调用方与被调用方职责
 
 调用方职责：
-  - 按照 ABI 规则准备参数
-  - 确保栈指针对齐
-  - 保存调用者保存寄存器（rax, rcx, r8-r11 等）中需要保留的值
+
+- 按照 ABI 规则准备参数
+- 确保栈指针对齐
+- 保存调用者保存寄存器（rax, rcx, r8-r11 等）中需要保留的值
 
 被调用方职责：
 
-  - 保存被调用者保存寄存器（rbx, rbp, r12-r15）。
-  - 管理自己的栈帧
-  - 按规则返回结果
+- 保存被调用者保存寄存器（rbx, rbp, r12-r15）。
+- 管理自己的栈帧
+- 按规则返回结果
 
 示例: C代码：
 
@@ -312,23 +315,23 @@ r12-r15  |  被调用者保存的通用寄存器
 
 int main()
 {
-	int x=rand();
-	printf("x=%d\n\n", x);
-	
-	int seed=2023;
-	x=rand();
-	printf("seed=%d, x=%d\n\n", seed, x);
-	
-	srand(time(0));
-	int a=5, b=10;
-	x=rand()%(b‐a+1) + a;
-	printf("x=%d in [%d,%d]\n\n", x,a,b);
-	
-	double y;
-	y=rand()/(double)RAND_MAX;
-	printf("y=%f in [0,1], RAND_MAX=%d\n\n", y, RAND_MAX);
-	
-	return 0;
+ int x=rand();
+ printf("x=%d\n\n", x);
+ 
+ int seed=2023;
+ x=rand();
+ printf("seed=%d, x=%d\n\n", seed, x);
+ 
+ srand(time(0));
+ int a=5, b=10;
+ x=rand()%(b‐a+1) + a;
+ printf("x=%d in [%d,%d]\n\n", x,a,b);
+ 
+ double y;
+ y=rand()/(double)RAND_MAX;
+ printf("y=%f in [0,1], RAND_MAX=%d\n\n", y, RAND_MAX);
+ 
+ return 0;
 }
 ```
 
@@ -341,20 +344,21 @@ int main()
 
 int main()
 {
-	long Second, Minute, Hour;
-	
-	Second = time(0);
-	Minute = Second / 60;
-	Hour = Minute / 60;
-	printf("当前北京时间是 %02d:%02d:%02d\n", (Hour+8)%24, Minute%60, Second%60);
-	
-	return 0;
+ long Second, Minute, Hour;
+ 
+ Second = time(0);
+ Minute = Second / 60;
+ Hour = Minute / 60;
+ printf("当前北京时间是 %02d:%02d:%02d\n", (Hour+8)%24, Minute%60, Second%60);
+ 
+ return 0;
 }
 ```
 
 **示例3**：计时函数clock
 
 - **clock()** : 返回进程启动后所使用的 cpu 总毫秒数。
+
 ```c
 #include <stdio.h>
 #include <time.h>
@@ -367,20 +371,20 @@ time_t t0, t1;
 double tt, tc;
 
 for (int i = 0; i < N; i++) {
-	for (int j = 0; j < N; j++) {
-	A[i][j] = 1.0 * (i + 1);
-	B[i][j] = 1.0 * (j + 1);
-	C[i][j] = 0.0;
-	}
+ for (int j = 0; j < N; j++) {
+ A[i][j] = 1.0 * (i + 1);
+ B[i][j] = 1.0 * (j + 1);
+ C[i][j] = 0.0;
+ }
 }
 
 t0 = time(0);
 tc = clock();
 
 for (int i = 0; i < N; i++) {
-	for (int j = 0; j < N; j++) {
-		for (int k = 0; k < N; k++) C[i][j] += A[i][k] * B[k][j];
-	}
+ for (int j = 0; j < N; j++) {
+  for (int k = 0; k < N; k++) C[i][j] += A[i][k] * B[k][j];
+ }
 } 
 
 tc = (double)(clock() - tc) / CLOCKS_PER_SEC;
@@ -415,10 +419,12 @@ C语言中函数参数传递有两种二形式：一种是值传递，另外一�
 1. 若形参是数组, 为增加灵活性, 通常省略长度，如果是二维数组，则只能省略行数;
 2. 如果数组形参没有指定长度, 则需另加一个形参, 用来传递实参数组的大小, 或者通过全局变
 量实现;
+
 ```c
 void my_swap(int a[], int b[], int n); // 可以省略长度, 但中括号不能省
 void sum_col(double A[][n], double s[]); // 这里的 n 不能省略, 只能省略行数
 ```
+
 3. 函数调用时, 只需用数组名。
 
 > [!note] 笔记
@@ -432,29 +438,29 @@ void sum_col(double A[][n], double s[]); // 这里的 n 不能省略, 只能省�
 
 void my_swap(int a[], int b[], int n)
 {
-	int t, i;
-	
-	for (i=0; i<n; i++)
-	{
-		t=a[i]; a[i]=b[i]; b[i]=t;
-	}
+ int t, i;
+ 
+ for (i=0; i<n; i++)
+ {
+  t=a[i]; a[i]=b[i]; b[i]=t;
+ }
 }
 
 int main()
 {
-	int x[3]={1,2,3}, y[3]={2,4,6};
-	int n = sizeof(x)/sizeof(x[0]);
-	
-	printf("\nBefore swapping:\n");
-	for(int i=0; i<n; i++)
-	printf("x[%d]=%d, y[%d]=%d\n", i, x[i], i, y[i]);
-	
-	my_swap(x,y,n);
-	
-	printf("\nAfter swapping:\n");
-	for(int i=0; i<n; i++)
-	printf("x[%d]=%d, y[%d]=%d\n", i, x[i], i, y[i]);
-	return 0;
+ int x[3]={1,2,3}, y[3]={2,4,6};
+ int n = sizeof(x)/sizeof(x[0]);
+ 
+ printf("\nBefore swapping:\n");
+ for(int i=0; i<n; i++)
+ printf("x[%d]=%d, y[%d]=%d\n", i, x[i], i, y[i]);
+ 
+ my_swap(x,y,n);
+ 
+ printf("\nAfter swapping:\n");
+ for(int i=0; i<n; i++)
+ printf("x[%d]=%d, y[%d]=%d\n", i, x[i], i, y[i]);
+ return 0;
 }
 ```
 
@@ -468,23 +474,23 @@ const int m=3, n=4;
 void sum_col(double A[][n], double s[])
 {
 int i, j;
-	for(j=0; j<n; j++) s[j]=0.0;
-	for(j=0; j<n; j++)
-		for(i=0; i<m; i++)
-			s[j] = s[j] + A[i][j];
+ for(j=0; j<n; j++) s[j]=0.0;
+ for(j=0; j<n; j++)
+  for(i=0; i<m; i++)
+   s[j] = s[j] + A[i][j];
 }
 
 int main()
 {
-	double H[m][n], s[n];
-	
-	for(int i=0; i<m; i++)
-		for(int j=0; j<n; j++)
-			H[i][j]=1.0/(i+j+1);
-	sum_col(H, s);
-	printf("s[0]=%f, s[%d]=%f\n", s[0], n‐1, s[n‐1]);
-	
-	return 0;
+ double H[m][n], s[n];
+ 
+ for(int i=0; i<m; i++)
+  for(int j=0; j<n; j++)
+   H[i][j]=1.0/(i+j+1);
+ sum_col(H, s);
+ printf("s[0]=%f, s[%d]=%f\n", s[0], n‐1, s[n‐1]);
+ 
+ return 0;
 }
 ```
 
@@ -498,10 +504,10 @@ int main()
 **示例1**：计算阶乘
 
 $$
-n! = 
-\begin{cases} 
+n! =
+\begin{cases}
 1 & \text{当 } n = 0, \\
-n \times (n-1)! & \text{当 } n > 0. 
+n \times (n-1)! & \text{当 } n > 0.
 \end{cases}
 $$
 
@@ -513,31 +519,31 @@ int factorial_recursion(int n); // 递归方式
 
 int main()
 {
-	int n, y;
-	printf("Please input n: ");
-	scanf("%d", &n);
-	
-	y = factorial_loop(n);
-	printf("普通方式：%d!=%d\n", n, y);
-	
-	y = factorial_recursion(n);
-	printf("递归方式：%d!=%d\n", n, y);
-	
-	return 0;
+ int n, y;
+ printf("Please input n: ");
+ scanf("%d", &n);
+ 
+ y = factorial_loop(n);
+ printf("普通方式：%d!=%d\n", n, y);
+ 
+ y = factorial_recursion(n);
+ printf("递归方式：%d!=%d\n", n, y);
+ 
+ return 0;
 }
 
 int factorial_loop(int n) // 普通方式
 {
-	int y = 1;
-	for (int i=1; i<=n; i++)
-		y = y * i;
-	return y;
+ int y = 1;
+ for (int i=1; i<=n; i++)
+  y = y * i;
+ return y;
 }
 
 int factorial_recursion(int n) // 递归方式
 {
-	if (n==0) return 1;
-	else return n*factorial_recursion(n‐1);
+ if (n==0) return 1;
+ else return n*factorial_recursion(n‐1);
 }
 ```
 
@@ -550,10 +556,11 @@ int factorial_recursion(int n) // 递归方式
 3. 内联函数体内不建议使用循环语句和 switch 语句;
 4. 有些函数无法定义成内联函数, 如递归调用函数等.
  
+
 ```c
 inline double f(double x) // 内联函数
 {
-	return 2*x*x ‐ 1; // f(x) = 2x^2 ‐1
+ return 2*x*x ‐ 1; // f(x) = 2x^2 ‐1
 }
 ```
 
@@ -575,13 +582,13 @@ int main（int argc， char *argy［］， char *envp ［］）
 
 int main (int argc, char *argv[], char *envp[])
 { 
-	for (int i = 0; i < argc; i++) { 
-		puts(argv[i]);
-	}  
-	while (*envp) { 
-		puts(*envp++);
-	}  
-	return EXIT_SUCCESS;
+ for (int i = 0; i < argc; i++) { 
+  puts(argv[i]);
+ }  
+ while (*envp) { 
+  puts(*envp++);
+ }  
+ return EXIT_SUCCESS;
 }
 ```
 
@@ -592,6 +599,7 @@ int main (int argc, char *argv[], char *envp[])
 - 如果 main函数 没有 return，则默认表示 return 0。  
   
 进程终止前（exit 或 main return），将执行如下操作：  
+
 - 执行 atexit 注册的清理函数。  
 - 关闭所有 C stream。  
 - 删除临时文件（tmpfile）。  
@@ -609,19 +617,19 @@ int main (int argc, char *argv[], char *envp[])
 #include <stdio.h>
 #include <stdarg.h>  
 void test (int count, ...) { 
-	va_list args; 
-	va_start(args, count);  
+ va_list args; 
+ va_start(args, count);  
 
-	for (int i = 0; i < count; i++) {
-		int a = va_arg(args, int); 
-		printf("%d\n", a);
-	}  
-	va_end(args);
+ for (int i = 0; i < count; i++) {
+  int a = va_arg(args, int); 
+  printf("%d\n", a);
+ }  
+ va_end(args);
 }
 
 int main (void)
 { 
-	test(3, 11, 22, 33);
-	return 0;
+ test(3, 11, 22, 33);
+ return 0;
 }
 ```

@@ -1,8 +1,8 @@
 C 语言的数据类型可分为**基本数据类型**和**派生（扩展）数据类型**。
 
 - 基本数据类型: 整型, 实型, 字符型（char）和布尔型（_Bool）
-	- 整型: int, short, long, unsigned int, unsigned short, unsigned long
-	- 实型: float, double
+  - 整型: int, short, long, unsigned int, unsigned short, unsigned long
+  - 实型: float, double
 - 派生（扩展、导出、自定义）数据类型: 数组, 指针, 枚举, 结构, 联合, 复数, 等等
 
 ![](https://static.cyub.vip/images/202509/c_var_type.png)
@@ -25,12 +25,14 @@ C 语言的数据类型可分为**基本数据类型**和**派生（扩展）数
 | uintptr_t                | 4字节 或 8字节 |                                |                                              |
 
 > [!note] 笔记
+>
 > - 上面图标中将char和_Bool也放入到整数类型中进行对比
 > - 事实上, C 语言标准没有规定每种数据类型的具体字节数和表示范围, 只规定大小顺
 序, 即长度满足下面的关系式
+
 > > char <= short <= int <= long <= long long
-> 
->   具体长度由编译器决定.
+>
+> 具体长度由编译器决定.
 
 如果需要精确的整数类型，可以引入`stdint.h`：
 
@@ -171,9 +173,9 @@ char to_upper(char c) {
 ```c
 /* Types for `void *' pointers.  */
 #if __WORDSIZE == 64
-	typedef unsigned long int    uintptr_t;
+ typedef unsigned long int    uintptr_t;
 #else    
-	typedef unsigned int         uintptr_t;
+ typedef unsigned int         uintptr_t;
 #endif
 ```
 
@@ -190,9 +192,9 @@ char to_upper(char c) {
 浮点数在计算机中是按照IEEE 754标准存储的，分为以下部分：
 
 - **符号位**：表示数值的正负。
-    
+
 - **指数位**：表示数值的指数部分。
-    
+
 - **尾数位**：表示数值的小数部分。
 
 浮点数默认类型是 double，可以添加后缀 F 来表⽰示 float，L 表⽰示 long double，可以局部省略。
@@ -239,6 +241,7 @@ enum Color {
 ```
 
 2. 可以为枚举值指定具体的整数值。
+
 ```c
 enum Color {
     RED = 1,
@@ -248,6 +251,7 @@ enum Color {
 ```
 
 3. 枚举成员的值可以相同。
+
 ```c
 enum Color {
     RED = 1,
@@ -257,6 +261,7 @@ enum Color {
 ```
 
 4. 枚举变量只能存储枚举值。
+
 ```c
 enum Color color1 = RED;
 
@@ -266,6 +271,7 @@ color1 = 3;     // 不合法，除非3是枚举值之一
 
 5. 定义枚举类型时候，可以省略枚举名
 我们可以通过这种方式来来代替宏定义常量。
+
 ```c
 enum Color {
     RED, // 值为0
@@ -346,22 +352,22 @@ typedef unsigned char BYTE; // 为unsigned char取名BYTE
 ```c
 int main(void)
 {
-	#define string char *
-	string a， b;// char* a， b; ==> char *a, char b
-	static_assert(sizeof(a) == 8);
-	static_assert(sizeof(b) == 1);
-	return 0；
+ #define string char *
+ string a， b;// char* a， b; ==> char *a, char b
+ static_assert(sizeof(a) == 8);
+ static_assert(sizeof(b) == 1);
+ return 0；
 }
 ```
 
 ```c
 int main（void）
 {
-	typedef char *string;
-	string a, b;// char *a, char *b;
-	static_assert(sizeof(a)== 8);
-	static_assert(sizeof(b) == 8);
-	return 0;
+ typedef char *string;
+ string a, b;// char *a, char *b;
+ static_assert(sizeof(a)== 8);
+ static_assert(sizeof(b) == 8);
+ return 0;
 }
 ```
 
@@ -370,15 +376,15 @@ int main（void）
 void 类型指定没有可用的值。它通常用于以下三种情况下：
 
 1. **函数返回为空**
-    
+
     C 中有各种函数都不返回值，或者您可以说它们返回空。不返回值的函数的返回类型为空。例如 **void exit (int status);**
-    
+
 2. **函数参数为空**
-    
+
     C 中有各种函数不接受任何参数。不带参数的函数可以接受一个 void。例如 **int rand(void);**
-    
+
 3. **指针指向 void**
-    
+
     类型为 void \* 的指针代表对象的地址，而不是类型。例如，内存分配函数 `void *malloc( size_t size );` 返回指向 void 的指针，可以转换为任何数据类型。
 
 ### 结构体
@@ -486,6 +492,7 @@ struct Employee emp = {
 #### 使用typedef简化结构体
 
 我们可以使用使用 `typedef` 创建结构体别名来简化结构体使用：
+
 ```c
 typedef struct Student {
     char name[20];
@@ -528,6 +535,7 @@ int main() {
 ```
 
 我们可以使用位字段来做标志位，⽐用位移运算符更直观，更节省内存。
+
 ```c
 int main() {
     struct
@@ -586,17 +594,21 @@ struct PackedData {
 #### 结构体使用常见错误与规避
 
 1. 未初始化指针（野指针）
+
 ```c
 struct Student *p;  
 p->age = 20;  // 野指针！p未指向有效内存
 ```
 
 2. 内存泄漏
+
 ```c
 struct Student *p = malloc(sizeof(struct Student));
 // 忘记 free(p)
 ```
+
 3. 浅拷贝导致数据共享
+
 ```c
 typedef struct {
     char *name;  // 指针成员
@@ -826,8 +838,8 @@ printf("%#x => %x, %x, %x, %x\n", n.x, n.bytes.a, n.bytes.b, n.bytes.c, n.bytes.
 ```c
 union value_t
 {
-	int ivalue;
-	long long lvalue;
+ int ivalue;
+ long long lvalue;
 };
 
 union value_t v1 = { 10 };
@@ -846,31 +858,37 @@ C语言中的类型转换规则可分为隐式转换和显式转换两类。
 
 ##### 整型提升（Integer Promotion）
 
-   - 在表达式中，`char`、`short`等小于`int`的整型（包括有符号和无符号）会被自动提升为`int`或`unsigned int`，以便参与运算。例如：  
+- 在表达式中，`char`、`short`等小于`int`的整型（包括有符号和无符号）会被自动提升为`int`或`unsigned int`，以便参与运算。例如：  
+
      ```c
      char a = 10, b = 20;
      int c = a + b; // a和b先提升为int再相加
      ```
 
-##### 通常算术转换（Usual Arithmetic Conversions） 
+##### 通常算术转换（Usual Arithmetic Conversions）
 
    当操作数类型不同时，按以下顺序转换：  
-   - **浮点优先**：若存在浮点类型，向更高精度的浮点类型转换：  
+
+- **浮点优先**：若存在浮点类型，向更高精度的浮点类型转换：  
      `float → double → long double`。  
+
      ```c
      int + float → float + float → 结果为float
      ```
-   - **整数转换**：若均为整数类型，按等级提升方向转换（有符号与无符号混合时需注意）：  
-     - 等级顺序（从低到高）：`_Bool → char → short → int → long → long long`。  
-     - 若带符号类型与无符号类型混合：  
-       - 若无符号类型等级≥带符号类型，带符号转为无符号。  
-       - 否则，若带符号类型能表示无符号类型所有值，无符号转为带符号；否则，两者转为无符号类型对应的更高等级类型。  
+
+- **整数转换**：若均为整数类型，按等级提升方向转换（有符号与无符号混合时需注意）：  
+  - 等级顺序（从低到高）：`_Bool → char → short → int → long → long long`。  
+  - 若带符号类型与无符号类型混合：  
+    - 若无符号类型等级≥带符号类型，带符号转为无符号。  
+    - 否则，若带符号类型能表示无符号类型所有值，无符号转为带符号；否则，两者转为无符号类型对应的更高等级类型。  
+
        ```c
        int + unsigned int → unsigned int + unsigned int
        ```
 
 3. **赋值转换**  
    右侧表达式的值自动转换为左侧变量的类型，可能发生截断或精度丢失：  
+
    ```c
    int a = 3.14;    // a = 3（截断小数）
    float b = 10;     // b = 10.0f
@@ -885,10 +903,12 @@ C语言中的类型转换规则可分为隐式转换和显式转换两类。
 #### 显式类型转换（强制转换）
 
 通过强制运算符`(type)`显式指定目标类型：  
+
 ```c
 double x = 3.14;
 int y = (int)x; // y = 3（直接截断）
 ```
+
 - **注意事项**：  
   - 可能丢失数据（如浮点转整数丢弃小数部分）。  
   - 指针强制转换需谨慎，可能引发未定义行为。  
@@ -897,6 +917,7 @@ int y = (int)x; // y = 3（直接截断）
 
 1. **符号问题**  
    混合有符号和无符号类型时，负数可能被转为极大正数，导致逻辑错误：  
+
    ```c
    if (-1 < 2U) // false，因为-1转为unsigned后为UINT_MAX
    ```
@@ -910,6 +931,7 @@ int y = (int)x; // y = 3（直接截断）
    - 不同类型指针的强制转换可能导致未定义行为（如`int*`转`float*`后解引用）。
 
 示例：
+
 ```c
 int a = 10;
 double b = 3.14;
@@ -947,6 +969,7 @@ int f = (int)b;     // f = 3（显式截断）
 ^07939e
 
 变量是程序中用于存储数据的内存位置的名称。变量的值可以在程序运行过程中被修改。变量具有下面特点：
+
 - 变量必须先声明，后使用。
 - 变量的类型决定了它可以存储的数据类型。
 - 变量的值可以动态改变。
@@ -993,6 +1016,7 @@ extern void func();// 声明函数
 ##### 局部变量
 
 局部变量：数据只在某个局部区域内有效（可见）, 如:
+
 1. 函数的形参和函数中定义的变量，只在该函数内有效
 2. for 循环初始语句中定义的变量和循环体内定义的变量，只在循环内有效
 3. 语句块中定义的变量只在该语句块中有效
@@ -1005,30 +1029,34 @@ extern void func();// 声明函数
 
 1. 全局变量需在所有函数外定义，在它后面定义的函数中均可以使用。
 2. 若要在它前面定义的函数中使用该全局变量，则需声明其为外部变量:
-	>extern 数据类型名 变量名
+
+ >extern 数据类型名 变量名
+
 3. 若局部变量与全局变量同名，则优先使用局部变量
+
 ```c
 #include <stdio.h>
 int k = 2; // 全局变量
 
 int main()
 {
-	int i=5, x; // 局部变量
-	x=i+k;
-	printf("x=%d\n", x);
-	
-	{
-		int k=16; // 局部变量
-		x=i+k;
-		printf("x=%d\n", x);
-	}
-	
-	x=i+k;
-	printf("x=%d\n", x);
+ int i=5, x; // 局部变量
+ x=i+k;
+ printf("x=%d\n", x);
+ 
+ {
+  int k=16; // 局部变量
+  x=i+k;
+  printf("x=%d\n", x);
+ }
+ 
+ x=i+k;
+ printf("x=%d\n", x);
 }
 ```
 
 > [!note] 笔记
+>
 > - 对于全局变量和静态变量（在函数内部定义的静态变量和在函数外部定义的全局变量），它们的默认初始值为0。
 > - 字符型变量的默认值为 \0。
 > - 指针变量的默认值为 NULL。
@@ -1051,6 +1079,7 @@ int main()
 ##### const
 
 const限定符[^1]用于声明对象为**只读**（不可修改）。主要用途是：
+
 - 保护数据不被意外修改（如函数参数、全局常量）。
 - 优化编译器对常量表达式的处理。
 
@@ -1063,6 +1092,7 @@ int *const q = &x;     // 常量指针（指针不可变，指向的值可变）
 ##### volatile
 
 用于告诉编译器不要对变量的访问进行某些优化（如缓存到寄存器），因为该变量的值可能在编译器无法预知的时机被外部因素修改。`volatile` 确保编译器：
+
 1. 每次访问变量时都直接从内存读取，而不是使用寄存器中的缓存值。
 2. 每次写入变量时都直接写到内存，而不是延迟或优化掉写操作。
 3. 不对变量访问的顺序进行重排（在编译器优化时）。
@@ -1071,22 +1101,26 @@ int *const q = &x;     // 常量指针（指针不可变，指向的值可变）
 
  **硬件寄存器访问（嵌入式系统）**
 
-   - **场景**：在嵌入式开发中，程序直接操作硬件寄存器（如GPIO、定时器或中断控制器的寄存器）。这些寄存器的值可能由硬件异步修改，编译器无法预测。
-   - **问题**：如果没有 `volatile`，编译器可能优化掉对寄存器的重复读写，认为值未改变，导致程序逻辑错误。
-   - **示例**：
+- **场景**：在嵌入式开发中，程序直接操作硬件寄存器（如GPIO、定时器或中断控制器的寄存器）。这些寄存器的值可能由硬件异步修改，编译器无法预测。
+- **问题**：如果没有 `volatile`，编译器可能优化掉对寄存器的重复读写，认为值未改变，导致程序逻辑错误。
+- **示例**：
+
      ```c
      volatile uint32_t * const status_reg = (uint32_t *)0x40008000; // 硬件状态寄存器
      while (*status_reg & 0x1) { // 轮询硬件状态
          // 等待硬件标志位清零
      }
      ```
+
      这里，`volatile` 确保每次循环都从硬件寄存器地址读取最新值，而不是使用缓存的旧值。
-   - **适用性**：嵌入式系统、驱动开发或直接操作内存映射的硬件接口。
+- **适用性**：嵌入式系统、驱动开发或直接操作内存映射的硬件接口。
 
 **信号处理程序（Signal Handling）**
-   - **场景**：在信号处理程序中修改的全局变量，可能被主程序或其他上下文访问。
-   - **问题**：编译器可能假设变量未被信号处理程序修改，从而优化掉读操作，导致主程序无法感知变量的变化。
-   - **示例**：
+
+- **场景**：在信号处理程序中修改的全局变量，可能被主程序或其他上下文访问。
+- **问题**：编译器可能假设变量未被信号处理程序修改，从而优化掉读操作，导致主程序无法感知变量的变化。
+- **示例**：
+
      ```c
      volatile int signal_received = 0;
      void signal_handler(int sig) {
@@ -1101,13 +1135,16 @@ int *const q = &x;     // 常量指针（指针不可变，指向的值可变）
          return 0;
      }
      ```
+
      `volatile` 确保主程序的 `while` 循环每次都检查 `signal_received` 的最新值。
-   - **适用性**：信号处理、异步事件处理。
+- **适用性**：信号处理、异步事件处理。
 
  **多线程共享变量（无锁或弱同步场景）**
-   - **场景**：在多线程程序中，共享变量在没有锁或原子操作保护的情况下被访问，且需要确保内存可见性。
-   - **问题**：编译器可能优化变量访问，导致线程读取到过期的值。`volatile` 确保每次访问都直接操作内存，但**不保证原子性或线程安全**。
-   - **示例**：
+
+- **场景**：在多线程程序中，共享变量在没有锁或原子操作保护的情况下被访问，且需要确保内存可见性。
+- **问题**：编译器可能优化变量访问，导致线程读取到过期的值。`volatile` 确保每次访问都直接操作内存，但**不保证原子性或线程安全**。
+- **示例**：
+
      ```c
      volatile int flag = 0; // 共享标志
      void *thread1(void *arg) {
@@ -1122,14 +1159,17 @@ int *const q = &x;     // 常量指针（指针不可变，指向的值可变）
          return NULL;
      }
      ```
+
      这里，`volatile` 确保线程2每次检查 `flag` 时读取内存中的最新值，而不是寄存器中的旧值。
-   - **注意**：`volatile` 不解决数据竞争问题（如多个线程同时写）。如果需要线程安全，应使用互斥锁（如你的代码中的 `pthread_mutex_t`）或 C11 的 `_Atomic` 类型。
-   - **适用性**：极少数无锁编程场景，或调试多线程问题时临时使用。通常更推荐使用锁或原子操作。
+- **注意**：`volatile` 不解决数据竞争问题（如多个线程同时写）。如果需要线程安全，应使用互斥锁（如你的代码中的 `pthread_mutex_t`）或 C11 的 `_Atomic` 类型。
+- **适用性**：极少数无锁编程场景，或调试多线程问题时临时使用。通常更推荐使用锁或原子操作。
 
 **内存映射的I/O或设备驱动**
-   - **场景**：在设备驱动程序中，访问内存映射的I/O区域（如DMA缓冲区、共享内存）。
-   - **问题**：这些区域的值可能由外部设备修改，编译器优化可能导致错误。
-   - **示例**：
+
+- **场景**：在设备驱动程序中，访问内存映射的I/O区域（如DMA缓冲区、共享内存）。
+- **问题**：这些区域的值可能由外部设备修改，编译器优化可能导致错误。
+- **示例**：
+
      ```c
      volatile char * const buffer = (char *)0x10000000; // 内存映射的设备缓冲区
      void read_device() {
@@ -1139,8 +1179,9 @@ int *const q = &x;     // 常量指针（指针不可变，指向的值可变）
          printf("Data received: %c\n", *buffer);
      }
      ```
+
      `volatile` 确保每次读取缓冲区都访问实际内存。
-   - **适用性**：设备驱动、实时系统。
+- **适用性**：设备驱动、实时系统。
 
 >[!warning] 注意
 >在 POSIX 线程库中，互斥锁的实现通常包含内存屏障（memory barrier），这确保了锁保护的变量在锁释放和获取时从主内存同步更新。因此，线程总是能看到变量的的最新值，即使编译器进行了优化。
@@ -1154,6 +1195,7 @@ const volatile int READ_ONLY_HW_REG = 0xFFFF; // 只读但可能被硬件修改
 ##### restrict
 
 用于限定指针为访问其指向数据的**唯一途径**，帮助编译器优化（如避免指针别名问题）。主要用途是：
+
 - 函数参数中明确指针的独占性（如 `memcpy` 的参数）。
 
 ```c
@@ -1166,6 +1208,7 @@ void copy(int *restrict dest, const int *restrict src, int size) {
 ##### \_Atomic
 
 声明变量为**原子类型**，支持多线程环境下的无竞争访问。主要用途是：
+
 - 多线程编程中保证操作的原子性（如自增、赋值）。
 
 ```c
@@ -1245,13 +1288,16 @@ int main(void) {
 | <del>regisiter</del> |                | 已弃用，用于建议编译器将变量存储在寄存器中（C11中不再强制支持）。       |                                         |                                                      |
 
 **说明：**
+
 1. **`const` vs `volatile`**：  
    - `const` 关注值的不可修改性，`volatile` 关注值的易变性，二者可组合使用：  
+
      ```c
      const volatile int READ_ONLY_HW_REG = 0xFFFF; // 只读但可能被硬件修改
      ```
 
 2. **`restrict` 的优化场景**：  
+
    ```c
    // 若无 restrict，编译器需假设 dest 和 src 可能重叠，无法优化为 memcpy
    void copy(int *restrict dest, const int *restrict src, int size);
@@ -1289,7 +1335,7 @@ void func() {
 ### 常量
 
 常量是程序中固定不变的值。常量的值在程序运行过程中不能被修改。常量的特性有：
-    
+
 - 常量的值在定义时确定，不能更改。
 - 常量可以提高代码的可读性和可维护性。
 
@@ -1305,6 +1351,7 @@ void func() {
 ```
 
 **字符串常量**存储在只读内存区，不可修改。
+
 ```c
 char *str = "Hello";
 // str[0] = 'h'; // 未定义行为（可能崩溃）
@@ -1328,6 +1375,7 @@ char *str = "Hello";
 |        | `ul`/`lu`等组合 | 组合指定无符号长整型（`unsigned long`）或更宽类型            | `123UL`、`0xABCDEFLLU` | 顺序无关（如`UL`或`LU`等效），但需后缀连续（如`ULL`）     |
 
 **关键规则**
+
 1. **前缀优先级**：  
    - `0`开头为八进制，`0x`/`0X`开头为十六进制，否则为十进制。
    - 注意：`09`是非法八进制（包含数字9）。
@@ -1378,7 +1426,9 @@ unsigned long long ull = 0xFFFFFFFFFFFFFFFFULL; // 无符号长长整型（64位
 char c = 'A';  // ASCII值为65
 int code = 'A'; // code = 65
 ```
+
 字符常量本质是整数值（ASCII码），可直接参与整数运算：
+
 ```c
 char diff = 'C' - 'A'; // diff = 2
 ```
@@ -1390,20 +1440,26 @@ char diff = 'C' - 'A'; // diff = 2
 C语言默认使用单字节字符（ASCII），但可通过以下方式处理多字节字符（如中文）。
 
  **1. 多字节字符集（Multi-Byte Characters）**
-  - 多字节字符集指的是多字节字符（如中文、日文）需占用多个 `char` 存储单元（具体取决于编码方式，如UTF-8、GBK）。  
-	  - 例如，UTF-8编码的中文“中”占3字节：`0xE4 0xB8 0xAD`。
-  - 使用 `char[]` 数组或字符串字面量存储多字节字符序列：  
+
+- 多字节字符集指的是多字节字符（如中文、日文）需占用多个 `char` 存储单元（具体取决于编码方式，如UTF-8、GBK）。  
+  - 例如，UTF-8编码的中文“中”占3字节：`0xE4 0xB8 0xAD`。
+- 使用 `char[]` 数组或字符串字面量存储多字节字符序列：  
+
     ```c
     char chinese[] = "中"; // UTF-8编码（3字节）
     ```
 
 **2. 宽字符（Wide Characters）**
-  - 使用 `wchar_t` 类型（需包含 `<wchar.h>`），表示宽字符（如Unicode字符）。  
-  - 宽字符常量用 `L''` 前缀表示：  
+
+- 使用 `wchar_t` 类型（需包含 `<wchar.h>`），表示宽字符（如Unicode字符）。  
+- 宽字符常量用 `L''` 前缀表示：  
+
     ```c
     wchar_t wc = L'中'; // 宽字符（通常为UTF-16/32编码）
     ```  
-  - 宽字符操作需使用宽字符函数（如 `wprintf`）：  
+
+- 宽字符操作需使用宽字符函数（如 `wprintf`）：  
+
     ```c
     #include <wchar.h>
     #include <locale.h>
@@ -1474,4 +1530,4 @@ int main() {
 }
 ```
 
-[^1]: https://zh.cppreference.com/w/c/language/const
+[^1]: <https://zh.cppreference.com/w/c/language/const>

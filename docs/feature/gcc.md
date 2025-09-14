@@ -1,13 +1,13 @@
 **GCC**（GNU Compiler Collection）是一个广泛使用的开源编译器套件，用于编译C、C++、Fortran等多种编程语言。它是由GNU项目开发的，是GNU工具链的核心组件之一。它是 **Linux 和类 Unix 系统中默认的 C/C++ 编译器**，也是许多嵌入式开发、系统软件开发的核心工具。
 
 - **支持多种语言**：C、C++、Fortran、Java、Go、Object C等。
-    
+
 - **跨平台**：支持多种操作系统，如Linux、macOS、Windows等。
-    
+
 - **优化能力强**：提供丰富的编译优化选项，提升代码性能。
-    
+
 - **丰富的编译选项**：提供大量的编译选项，用于控制编译过程。
-    
+
 - **开源免费**：遵循GPL许可证，免费使用和修改。
 
 GCC由下面几部分组成：
@@ -40,6 +40,7 @@ GCC编译流程分为四大步骤：
 # 单步完成全部过程
 gcc main.c utils.c -o program
 ```
+
 上面一步到位的命令，可以拆解四个子命令:
 
 ```bash
@@ -74,10 +75,10 @@ gcc的编译选项有：
 - `-O3`：激进优化
 - `-Os`：优化代码尺寸
 - `-fno-omit-frame-pointer`：用于禁用帧指针省略优化。
-	- 默认情况下，GCC 会启用 `-fomit-frame-pointer` 优化（在优化级别 `-O2` 及以上），允许编译器省略帧指针（ebp）以优化性能。
-	- 使用 `-fno-omit-frame-pointer` 选项告诉 GCC 不要省略帧指针，保留它以便调试器可以更准确地跟踪函数调用栈。这对于调试和性能分析非常有用。
+ 	- 默认情况下，GCC 会启用 `-fomit-frame-pointer` 优化（在优化级别 `-O2` 及以上），允许编译器省略帧指针（ebp）以优化性能。
+ 	- 使用 `-fno-omit-frame-pointer` 选项告诉 GCC 不要省略帧指针，保留它以便调试器可以更准确地跟踪函数调用栈。这对于调试和性能分析非常有用。
 - `-D`：用于在编译时定义宏。比如：
-	- **`-DNDEBUG`**：通常用于禁用断言（assertions）
+ 	- **`-DNDEBUG`**：通常用于禁用断言（assertions）
 - `-save-temps`: 保存所有中间文件
 
 用法示例：
@@ -111,7 +112,7 @@ gcc -o program program.o libfoo.a
 
 - 在编译阶段，-I/usr/include 会被用来寻找头文件， 而-L... -l... 在编译阶段无意义，只是被忽略。
 - 而链接阶段时候，由于 -lsqlite3 已经出现在命令行中，而 main.c 尚未被处理，链接器会先把 sqlite3 的符号记下来，但此时没有任何目标文件需要这些符号；等到后面 main.c 被编译成临时目标文件并链接时，如果使用了 --as-needed（很多发行版默认打开），链接器会“忘记”之前那个 -lsqlite3，导致最终可能找不到 sqlite3 的符号而报错（常见症状：undefined reference to 'sqlite3_open' 等）。
- - 如果关闭 `--as-needed`（或显式使用 `--no-as-needed`），第一种写法才能够运行。
+- 如果关闭 `--as-needed`（或显式使用 `--no-as-needed`），第一种写法才能够运行。
 
 对于第二种写法不论是否打开 `--as-needed`，第二种写法都能正确运行。
 
@@ -130,11 +131,11 @@ gcc -E source.c -o preprocessed_output.i
 预处理的执行顺序一般如下：
 
 1. **头文件包含**：所有被包含的头文件内容替换到源代码中。
-    
+
 2. **宏定义和替换**：所有宏的使用被替换为相应的值或表达式。
-    
+
 3. **条件编译**：根据条件编译指令，选择要编译的代码部分。
-    
+
 4. **其他预处理指令**：处理其他预处理指令，如`#undef`和`#pragma`。
 
 ### 头文件包含
@@ -144,6 +145,7 @@ gcc -E source.c -o preprocessed_output.i
 #### 系统头文件包含
 
 系统头文件使用`<`/`>`来包裹着头文件，它的查找路径由编译器设置，一般是`/usr/include` 等标准路径。
+
 ```c
 #include <stdio.h>
 ```
@@ -177,8 +179,9 @@ gcc -E source.c -o preprocessed_output.i
 ### 宏定义
 
 在C语言中，我们可以使用`#define`来进行宏（Macro）定义。宏定义可以简单分为下面几类：
+
 - 符号常量
-	也称为宏常量，它是最简单的宏定义，用于简单替换。
+ 也称为宏常量，它是最简单的宏定义，用于简单替换。
 - 宏函数，它是带参宏
 - 多行宏
 
@@ -198,6 +201,7 @@ float circle_area(float r) {
 #### 宏函数
 
 语法格式：
+
 ```c
 #define MACRO_NAME(param_list) replacement_text
 ```
@@ -326,7 +330,9 @@ printf("Error at %s:%d\n", __FILE__, __LINE__);
 
 int main(void) { debugf("%s: %d\r\n", "debug", 100); }
 ```
+
 基于此我们可以加上文件、行号等信息：
+
 ```c
 #include <stdio.h>
 
@@ -340,9 +346,10 @@ int main(void) { debugf("%s: %d\r\n", "debug", 100); }
 
 在C语言的预处理阶段，除了常见的文件包含（`#include`）、宏定义（`#define`）和条件编译（`#ifdef`、`#ifndef`、`#if`、`#else`、`#elif`、`#endif`）等指令外，还有一些特殊的预处理指令，它们提供了额外的功能和灵活性。
 
-#### `#error` 
+#### `#error`
 
 用于在预处理阶段触发一个错误，通常用于确保某些条件在编译时满足。
+
 ```c
 #ifdef DEBUG
     #if DEBUG_LEVEL < 1
@@ -418,10 +425,10 @@ extern void exitnow();
 int foo(int n)
 {
         if ( n > 0 )
-	{
+ {
                 exitnow();
-		/* control never reaches this point */
-	}
+  /* control never reaches this point */
+ }
         else
                 return 0;
 }
@@ -482,6 +489,7 @@ warning: 'old_api' is deprecated: Use new_api() instead [-Wdeprecated-declaratio
 用于强制或禁止函数内联（优化关键代码或调试）。
 
 从C99开始，可以使用`inline`关键字告诉编译器此函数是内联函数，需要将其代码拷贝到调用函数的地方。
+
 ```c
 static inline int foo (void) {}
 ```
@@ -531,8 +539,9 @@ int my_pure_function(int a, int b) __attribute__((pure));
 
 ```c
 for (i = 0; i< strlen(p); i++)
-	printf("%c", toupper(p[i]));
+ printf("%c", toupper(p[i]));
 ```
+
 如果编译器不知道`strlen()`是纯函数，它就会在每次循环迭代时候调用此函数。
 
 #### const
@@ -629,6 +638,7 @@ int main() {
     return 0;
 }
 ```
+
 **弱引用(Weak Reference)** 表示对某个符号的非强制依赖，链接器在解析时如果找不到该符号的定义，不会报错，而是将符号解析为默认值（通常是 0 或 NULL）。弱引用允许程序在符号未定义时仍能链接成功，适用于可选功能或动态加载场景，以及允许符号不存在时优雅降级。如果符号有定义，弱引用会使用该定义；如果没有定义，引用会被解析为 0（变量）或空函数（函数）。
 
 与弱引用相对的是**强引用 (Strong Reference)**。强引用表示对某个符号（变量或函数）的明确依赖，链接器在解析时必须找到该符号的定义，否则会报错（“undefined reference”错误）。
@@ -646,14 +656,15 @@ int main() {
 用于在代码中显式标记符号的可见性。主要用于解决以下问题：
 
 - **隐藏非必要符号**：默认情况下，动态库会导出所有全局符号，可能引发命名冲突或安全风险。通过 `visibility` 可以仅暴露必要的接口。
-    
+
 - **优化性能**：减少导出的符号数量能加快动态库的加载速度和减少内存占用
 
 我们可以通过 `-fvisibility=xxx` 指定默认的符号可见性规则：
 
 - `default`：符号可见（默认行为）。
-    
+
 - `hidden`：符号不可见，除非显式声明为 `default`。
+
 ```c
 # 编译动态库时，隐藏所有符号，仅显式标记的符号可见
 gcc -shared -fvisibility=hidden -o libdemo.so demo.c
@@ -702,6 +713,7 @@ void is_hidden() {
 ```
 
 编译并验证符号表：
+
 ```bash
 gcc -shared -fvisibility=hidden -o libvis.so vis.c
 readelf -s libvis.so | grep hidden
@@ -717,11 +729,11 @@ readelf -s libvis.so | grep hidden
 
 ```c
 __attribute__ ((malloc)) void * get_page(void) {
-	int page_size;
-	page_size = getpagesize();
-	if (page_size<=0)
-		return NULL;
-	return malloc(page_size);
+ int page_size;
+ page_size = getpagesize();
+ if (page_size<=0)
+  return NULL;
+ return malloc(page_size);
 }
 ```
 
@@ -842,8 +854,8 @@ void old_function(void) {
 GCC中进行分支标注的关键字是`_builtin_expect`,但语法糟糕难理解，我们可以使用预处理宏来简单化处理：
 
 ```c
-#define likely(x)	__builtin_expect(!!(x), 1)
-#define unlikely(x)	__builtin_expect(!!(x), 0)
+#define likely(x) __builtin_expect(!!(x), 1)
+#define unlikely(x) __builtin_expect(!!(x), 0)
 ```
 
 > [!note] 笔记
@@ -862,9 +874,9 @@ typeof (*x) y[42]; // 声明y为 x指向对象类型的数组
 
 ```c
 #define max(a, b) ({ \
-	typeof (a) _a = (a); \
-	typeof (b) _b = (b); \
-	_a > _b ? _a : _b; \
+ typeof (a) _a = (a); \
+ typeof (b) _b = (b); \
+ _a > _b ? _a : _b; \
 })
 ```
 
@@ -874,9 +886,9 @@ typeof (*x) y[42]; // 声明y为 x指向对象类型的数组
 
 ```c
 struct ship {
-	int year_built;
-	char cannons;
-	int mast_height;
+ int year_built;
+ char cannons;
+ int mast_height;
 }
 
 struct ship my_ship;
@@ -904,17 +916,17 @@ case low ... high: // 从[low, high]这个范围内都匹配
 ```c
 static int sd_major(int major_idx)
 {
-	switch (major_idx) {
-	case 0:
-		return SCSI_DISK0_MAJOR;
-	case **1 ... 7**:
-		return SCSI_DISK1_MAJOR + major_idx - 1;
-	case **8 ... 15**:
-		return SCSI_DISK8_MAJOR + major_idx - 8;
-	default:
-		BUG();
-		return 0;	/* shut up gcc */
-	}
+ switch (major_idx) {
+ case 0:
+  return SCSI_DISK0_MAJOR;
+ case **1 ... 7**:
+  return SCSI_DISK1_MAJOR + major_idx - 1;
+ case **8 ... 15**:
+  return SCSI_DISK8_MAJOR + major_idx - 8;
+ default:
+  BUG();
+  return 0; /* shut up gcc */
+ }
 }
 ```
 
