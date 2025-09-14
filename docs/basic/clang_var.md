@@ -996,7 +996,8 @@ extern void func();// 声明函数
 1. 函数的形参和函数中定义的变量，只在该函数内有效
 2. for 循环初始语句中定义的变量和循环体内定义的变量，只在循环内有效
 3. 语句块中定义的变量只在该语句块中有效
-![[c_local_var.png]]
+
+![](https://static.cyub.vip/images/202509/c_local_var.png)
 
 ##### 全局变量
 
